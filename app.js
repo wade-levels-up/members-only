@@ -6,6 +6,7 @@ const pool = require("./db/pool");
 
 // Require Routes
 const indexRouter = require("./routes/indexRouter");
+const signUpRouter = require("./routes/signUpRouter");
 
 // Configuration and create express instance
 require("dotenv").config();
@@ -35,6 +36,7 @@ app.use(passport.session()); // ??? IWTKM
 
 // Routes
 app.use("/", indexRouter);
+app.use("/sign-up", signUpRouter);
 
 // Error handling
 
