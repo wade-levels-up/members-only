@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1><%= title %></h1>
+    <form action="/join" method="post">
+        <ul>
+            <li>
+                <label for="username">Username: </label>
+                <input type="text" name="username" id="username" minlength="1" maxlength="80" required>
+            </li>
+            <li>
+                <span>Don't have a username yet? Sign-Up below</span>
+                <a href="/sign-up">Sign-Up</a>
+            </li>
+            <li>
+                <label for="secret_password">Secret password: </label>
+                <input type="password" name="secret_password" id="secret_password" minlength="1" maxlength="80" required>
+            </li>
+            <li>
+                <button type="submit">Submit</button>
+            </li>
+        </ul>
+    </form>
+    <a href="/">Return Home</a>
+</body>
+</html>

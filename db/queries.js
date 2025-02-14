@@ -5,6 +5,19 @@ async function getAllUsers() {
   return rows;
 }
 
+async function getUserByUsername(username) {
+  const { rows } = await pool.query(
+    "SELECT * FROM users WHERE username ILIKE $1",
+    [username]
+  );
+  return rows;
+}
+
+async function getUserById(id) {
+  const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+  return rows;
+}
+
 async function postNewUser(user) {
   const { first_name, last_name, username, email, password } = user;
   await pool.query(
@@ -16,4 +29,4 @@ async function postNewUser(user) {
   );
 }
 
-module.exports = { getAllUsers, postNewUser };
+module.exports = { getAllUsers, getUserByUsername, getUserById, postNewUser };

@@ -7,7 +7,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Hello world</h1>
-    <a href="/sign-up">Sign up!</a>
+    <h1>Members Only</h1>
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <ul>
+            <li>
+                <li>
+                    <label for="username">Username: </label>
+                    <input type="text" name="username" id="username" minlength="1" maxlength="80" required>
+                </li>
+                <li>
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" id="password" minlength="1" maxlength="80" required>
+                </li>
+                <li>
+                    <button type="submit">Log in</button>
+                </li>
+            </li>
+        </ul>
+    </form>
+    <span>Don't have an account? <a href="/sign-up">Sign up</a></span>
 </body>
 </html>

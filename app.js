@@ -2,11 +2,18 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const pgSession = require("connect-pg-simple")(session); // ??? IWTKM
-const pool = require("./db/pool");
+const pool = require("./db/pool"); // Database
+const queries = require("./db/queries");
+const bycrpyt = require("bcryptjs");
+const LocalStrategy = require("passport-local").Strategy;
 
 // Require Routes
 const indexRouter = require("./routes/indexRouter");
 const signUpRouter = require("./routes/signUpRouter");
+const joinRouter = require("./routes/joinRouter");
+const loginRouter = require("./routes/loginRouter");
+const mainRouter = require("./routes/mainRouter");
+const logoutRouter = require("./routes/logoutRouter");
 
 // Configuration and create express instance
 require("dotenv").config();
@@ -32,11 +39,58 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
+
 app.use(passport.session()); // ??? IWTKM
+
+// Passport
+
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const rows = await queries.getUserByUsername(username);
+      const user = rows[0];
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+
+      const match = await bycrpyt.compare(password, user.password);
+      if (!match) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const rows = await queries.getUserById(id);
+    const user = rows[0];
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
 
 // Routes
 app.use("/", indexRouter);
 app.use("/sign-up", signUpRouter);
+app.use("/join", joinRouter);
+app.use("/login", loginRouter);
+app.use("/main", mainRouter);
+app.use("/logout", logoutRouter);
 
 // Error handling
 

@@ -15,6 +15,46 @@
               <% }) %>
         </ul>
     <% } %>
-    <%- include("../partials/sign-up-form.ejs") %>
+    <form action="/sign-up" method="post">
+        <ul>
+            <li>
+                <label for="first_name">First name: </label>
+                <input type="text" name="first_name" id="first_name" maxlength="80" required pattern="[A-Z][a-z]*" title="First name must start with a capital letter and contain only letters.">
+            </li>
+            <li>
+                <label for="last_name">Last name: </label>
+                <input type="text" name="last_name" id="last_name" maxlength="80" required pattern="[A-Z][a-z]*" title="Last name must start with a capital letter and contain only letters.">
+            </li>
+            <li>
+                <label for="username">Username: </label>
+                <input type="text" name="username" id="username" maxlength="80" required>
+            </li>
+            <li>
+                <label for="username">Email: </label>
+                <input type="email" name="email" id="email" maxlength="255" required>
+            </li>
+            <li>
+                <label for="password">Password: </label>
+                <input type="password" name="password" id="password" minlength="8" maxlength="255" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.">
+            </li>
+            <li>
+                <label for="confirm_password">Confirm password: </label>
+                <input type="password" name="confirm_password" id="confirm_password" minlength="8" maxlength="255" required>
+            </li>
+            <li>
+                <button type="submit">Submit</button>
+            </li>
+            <li>
+                <details>
+                    <summary></summary>
+                    <label for="is_admin">Sign-up as Admin:</label>
+                    <input type="checkbox" name="is_admin" id="is_admin">
+                    <label for="admin_password">Secret Admin Password:</label>
+                    <input type="password" name="admin_password" id="admin_password">
+                </details>
+            </li>
+        </ul>
+    </form>
+    <a href="/">Return Home</a>
 </body>
 </html>

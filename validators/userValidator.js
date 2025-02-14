@@ -17,7 +17,6 @@ const validateNewUser = [
       "Email must be a Top-Level Domain. For exmaple, ending in .com, .org or .net"
     ),
   body("password").trim(),
-  body("joined").isDate().withMessage("Joined must be a date"),
   body("confirm_password").trim(),
   body("confirm_password")
     .trim()
