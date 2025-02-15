@@ -15,6 +15,17 @@
     <% } %>
     <% if (user.is_member) { %>
         <h3>Membership status: Verified Member ✅</h3>
+        <form action="/main/newPost" method="post">
+            <ul>
+                <li>
+                    <label for="message">New Message: </label>
+                    <textarea id="message" name="message" rows="5" cols="33"></textarea>
+                </li>
+                <li>
+                    <button type="submit">Submit</button>
+                </li>
+            </ul>
+        </form>
     <% } else { %>
         <h3>Membership status: Unverified Member ❌</h3>
         <p>Viewing messages as an unverfied member. This means the name of the poster is hidden as well as the date. To see these details you'll need to become a verified member.</p>
@@ -26,7 +37,7 @@
                   <% }) %>
             </ul>
         <% } %>
-        <form action="/main" method="post">
+        <form action="/main/verifyMember" method="post">
             <ul>
                 <li>
                     <label for="secret_passcode">Secret Passcode: </label>

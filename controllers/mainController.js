@@ -2,7 +2,10 @@ require("dotenv").config();
 const asyncHandler = require("express-async-handler");
 const queries = require("../db/queries");
 const { validationResult } = require("express-validator");
-const { validateSecretPasscode } = require("../validators/userValidator");
+const {
+  validateSecretPasscode,
+  validateMessage,
+} = require("../validators/userValidator");
 
 const getMainPage = asyncHandler(async (req, res) => {
   try {
@@ -37,4 +40,25 @@ const postSecretPasscode = [
   }),
 ];
 
-module.exports = { getMainPage, postSecretPasscode };
+const postNewPost = [
+  validateMessage,
+  asyncHandler(async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).render("pages/main", {
+          title: "Main",
+          user: req.user,
+          errors: errors.array(),
+        });
+      }
+
+      await queries.addNewPost(req.user.id, req.body.message);
+      res.redirect("/main");
+    } catch (error) {
+      throw new Error(`Couldn't post new message: ${error}`);
+    }
+  }),
+];
+
+module.exports = { getMainPage, postSecretPasscode, postNewPost };

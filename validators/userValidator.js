@@ -40,11 +40,18 @@ const validateNewUser = [
 
 const validateSecretPasscode = [
   body("secret_passcode").custom((value) => {
-    if (value !== process.env.SECRET_PASSCODE) {
+    if (value && value !== process.env.SECRET_PASSCODE) {
       throw new Error("Secret passcode is invalid");
     }
     return true;
   }),
 ];
 
-module.exports = { validateNewUser, validateSecretPasscode };
+const validateMessage = [
+  body("message")
+    .trim()
+    .isLength({ max: 200 })
+    .withMessage("Message must be at most 200 characters long"),
+];
+
+module.exports = { validateNewUser, validateSecretPasscode, validateMessage };

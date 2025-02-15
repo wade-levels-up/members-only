@@ -41,10 +41,18 @@ async function verifyMember(id) {
   await pool.query("UPDATE users SET is_member = true WHERE id = $1", [id]);
 }
 
+async function addNewPost(id, message) {
+  await pool.query(`INSERT INTO messages (user_id, message) VALUES ($1, $2)`, [
+    id,
+    message,
+  ]);
+}
+
 module.exports = {
   getAllUsers,
   getUserByUsername,
   getUserById,
   postNewUser,
   verifyMember,
+  addNewPost,
 };
