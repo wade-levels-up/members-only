@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { body } = require("express-validator");
 
 const validateNewUser = [
@@ -28,4 +29,13 @@ const validateNewUser = [
     }),
 ];
 
-module.exports = { validateNewUser };
+const validateSecretPasscode = [
+  body("secret_passcode").custom((value) => {
+    if (value !== process.env.SECRET_PASSCODE) {
+      throw new Error("Secret passcode is invalid");
+    }
+    return true;
+  }),
+];
+
+module.exports = { validateNewUser, validateSecretPasscode };

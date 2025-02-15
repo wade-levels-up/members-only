@@ -6,11 +6,11 @@ const pool = require("./db/pool"); // Database
 const queries = require("./db/queries");
 const bycrpyt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
+const checkAuth = require("./middleware/ensureAuthenticated");
 
 // Require Routes
 const indexRouter = require("./routes/indexRouter");
 const signUpRouter = require("./routes/signUpRouter");
-const joinRouter = require("./routes/joinRouter");
 const loginRouter = require("./routes/loginRouter");
 const mainRouter = require("./routes/mainRouter");
 const logoutRouter = require("./routes/logoutRouter");
@@ -39,15 +39,9 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user);
-  next();
-});
-
-app.use(passport.session()); // ??? IWTKM
-
 // Passport
+
+app.use(passport.session());
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -85,10 +79,16 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Routes
+
+////  Public Routes
 app.use("/", indexRouter);
 app.use("/sign-up", signUpRouter);
-app.use("/join", joinRouter);
 app.use("/login", loginRouter);
+
+////  Middleware to ensure authentication for routes below
+app.use(checkAuth.isAuth);
+
+////  Protected Routes
 app.use("/main", mainRouter);
 app.use("/logout", logoutRouter);
 

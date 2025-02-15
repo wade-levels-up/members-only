@@ -29,4 +29,14 @@ async function postNewUser(user) {
   );
 }
 
-module.exports = { getAllUsers, getUserByUsername, getUserById, postNewUser };
+async function verifyMember(id) {
+  await pool.query("UPDATE users SET is_member = true WHERE id = $1", [id]);
+}
+
+module.exports = {
+  getAllUsers,
+  getUserByUsername,
+  getUserById,
+  postNewUser,
+  verifyMember,
+};

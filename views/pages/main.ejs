@@ -9,6 +9,31 @@
 <body>
     <h1>Main</h1>
     <h2>Welcome back <%= user.username %></h2>
+    <% if (user.is_member) { %>
+        <h3>Membership status: Verified Member ✅</h3>
+    <% } else { %>
+        <h3>Membership status: Unverified Member ❌</h3>
+        <p>Viewing messages as an unverfied member. This means the name of the poster is hidden as well as the date. To see these details you'll need to become a verified member.</p>
+        <p>To verify your membership please enter the secret passcode below</p>
+        <% if (locals.errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                    <li><strong>Error:</strong> <%= error.msg %></li>
+                  <% }) %>
+            </ul>
+        <% } %>
+        <form action="/main" method="post">
+            <ul>
+                <li>
+                    <label for="secret_passcode">Secret Passcode: </label>
+                    <input type="password" name="secret_passcode" id="secret_passcode" minlength="1" maxlength="80" required>
+                </li>
+                <li>
+                    <button type="submit">Submit</button>
+                </li>
+            </ul>
+        </form>
+    <% } %>
     <a href="/logout">Logout</a>
 </body>
 </html>

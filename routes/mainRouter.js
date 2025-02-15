@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const mainRouter = Router();
 const mainController = require("../controllers/mainController");
-const ensureAuthenticated = require("../middleware/ensureAuthenticated");
 
-mainRouter.get("/", ensureAuthenticated, mainController.getMainPage);
+mainRouter.get("/", mainController.getMainPage);
+mainRouter.post("/", mainController.postSecretPasscode);
 
 module.exports = mainRouter;
