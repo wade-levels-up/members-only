@@ -15,6 +15,7 @@
     <% } %>
     <% if (user.is_member) { %>
         <h3>Membership status: Verified Member ✅</h3>
+        <a href="/logout">Logout</a>
         <form action="/main/newPost" method="post">
             <ul>
                 <li>
@@ -26,8 +27,34 @@
                 </li>
             </ul>
         </form>
+        <% if (locals.messages) { %>
+            <ul>
+                <% messages.forEach((message) => { %>
+                    <li>
+                        <span>Added: <%= formatDate(new Date(message.added), 'PPpp') %> by: <%= message.username %></span>
+                        <p><%= message.message %></p>
+                        <form id="deleteMessageForm" action="/main/deletePost" method="post">
+                            <input type="hidden" name="message_id" value="<%= message.id %>">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
     <% } else { %>
         <h3>Membership status: Unverified Member ❌</h3>
+        <a href="/logout">Logout</a>
+        <form id="newPostForm" action="/main/newPost" method="post">
+            <ul>
+                <li>
+                    <label for="message">New Message: </label>
+                    <textarea id="message" name="message" rows="5" cols="33"></textarea>
+                </li>
+                <li>
+                    <button type="submit" form="newPostForm">Submit</button>
+                </li>
+            </ul>
+        </form>
         <p>Viewing messages as an unverfied member. This means the name of the poster is hidden as well as the date. To see these details you'll need to become a verified member.</p>
         <p>To verify your membership please enter the secret passcode below</p>
         <% if (locals.errors) { %>
@@ -37,18 +64,27 @@
                   <% }) %>
             </ul>
         <% } %>
-        <form action="/main/verifyMember" method="post">
+        <form id="verifyMembershipForm" action="/main/verifyMember" method="post">
             <ul>
                 <li>
                     <label for="secret_passcode">Secret Passcode: </label>
                     <input type="password" name="secret_passcode" id="secret_passcode" minlength="1" maxlength="80" required>
                 </li>
                 <li>
-                    <button type="submit">Submit</button>
+                    <button type="submit" form="verifyMembershipForm">Submit</button>
                 </li>
             </ul>
         </form>
+        <% if (locals.messages) { %>
+            <ul>
+                <% messages.forEach((message) => { %>
+                    <li>
+                        <span>Added: ******** %> by: ********</span>
+                        <p><%= message.message %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
     <% } %>
-    <a href="/logout">Logout</a>
 </body>
 </html>

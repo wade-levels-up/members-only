@@ -48,6 +48,20 @@ async function addNewPost(id, message) {
   ]);
 }
 
+async function getAllMessages() {
+  const { rows } = await pool.query(`
+    SELECT users.username AS username, messages.message AS message, messages.added AS added, messages.id AS id
+    FROM messages
+    JOIN users ON users.id = messages.user_id
+    ORDER BY messages.added DESC
+  `);
+  return rows;
+}
+
+async function deletePost(id) {
+  await pool.query("DELETE FROM messages WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllUsers,
   getUserByUsername,
@@ -55,4 +69,6 @@ module.exports = {
   postNewUser,
   verifyMember,
   addNewPost,
+  getAllMessages,
+  deletePost,
 };

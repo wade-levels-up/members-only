@@ -6,10 +6,17 @@ const {
   validateSecretPasscode,
   validateMessage,
 } = require("../validators/userValidator");
+const { format } = require("date-fns");
 
 const getMainPage = asyncHandler(async (req, res) => {
   try {
-    res.render("pages/main", { title: "Main", user: req.user });
+    const messages = await queries.getAllMessages();
+    res.render("pages/main", {
+      title: "Main",
+      user: req.user,
+      messages: messages,
+      formatDate: format,
+    });
   } catch (error) {
     throw new Error(`Couldn't get the main page: ${error}`);
   }
@@ -61,4 +68,13 @@ const postNewPost = [
   }),
 ];
 
-module.exports = { getMainPage, postSecretPasscode, postNewPost };
+const deletePost = asyncHandler(async (req, res) => {
+  try {
+    await queries.deletePost(req.body.message_id);
+    res.redirect("/main");
+  } catch (error) {
+    throw new Error(`Couldn't delete post: ${error}`);
+  }
+});
+
+module.exports = { getMainPage, postSecretPasscode, postNewPost, deletePost };
