@@ -19,13 +19,21 @@ async function getUserById(id) {
 }
 
 async function postNewUser(user) {
-  const { first_name, last_name, username, email, password } = user;
+  const {
+    first_name,
+    last_name,
+    username,
+    email,
+    password,
+    is_admin,
+    is_member,
+  } = user;
   await pool.query(
     `
-      INSERT INTO users (first_name, last_name, username, email, password)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO users (first_name, last_name, username, email, password, is_admin, is_member)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
     `,
-    [first_name, last_name, username, email, password]
+    [first_name, last_name, username, email, password, is_admin, is_member]
   );
 }
 

@@ -27,6 +27,15 @@ const validateNewUser = [
       }
       return true;
     }),
+  body("admin_passcode")
+    .optional()
+    .trim()
+    .custom((value) => {
+      if (value && value !== process.env.ADMIN_PASSCODE) {
+        throw new Error("Invalid admin passcode.");
+      }
+      return true;
+    }),
 ];
 
 const validateSecretPasscode = [

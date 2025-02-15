@@ -27,6 +27,13 @@ const postNewUserToDatabase = [
       }
 
       req.body.password = await bcrypt.hash(req.body.password, 10);
+
+      // If the admin password is entered correctly set is_admin and is_member to true
+      req.body.is_admin =
+        req.body.admin_passcode === process.env.ADMIN_PASSCODE;
+      req.body.is_member =
+        req.body.admin_passcode === process.env.ADMIN_PASSCODE;
+
       await queries.postNewUser(req.body);
       res.redirect("/");
     } catch (error) {
