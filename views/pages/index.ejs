@@ -11,6 +11,9 @@
             <a href="/main">Continue to main</a>
         <% } else { %>
             <h2>Login</h2>
+            <% if ( locals.error ) { %>
+                <p class="error"><%= error %></p>
+            <% } %>
             <form action="/login" method="post">
                 <ul>             
                     <li>

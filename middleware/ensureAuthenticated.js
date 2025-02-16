@@ -2,6 +2,7 @@ function isAuth(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  console.log("INside AUTHod");
   res.render("pages/unauthorized", { title: "Unauthorized" }); // Route for not authenticated
 }
 
