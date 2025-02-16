@@ -48,7 +48,7 @@
                     <li class="ends sticky"><i class="fa-solid fa-gear fa-lg gearSpin"></i>- Most Recent -</li>
                     <% messages.forEach((message) => { %>
                         <li class="messageCard">
-                            <span class="cardHeader"><p><i class="fa-solid fa-user fa-sm"></i>  <%= message.username %></p><p>Added <%= formatDate(new Date(message.added), 'PPp') %></p></span>
+                            <span class="cardHeader"><p><i class="fa-solid fa-user fa-sm"></i>  <%= message.username %></p><p><%= formatDate(new Date(message.added), 'PPp') %></p></span>
                             <p class="cardMain"><%= message.message %></p>
                             <% if ( user.is_admin ) { %>
                                 <form class="cardFooter" id="deleteMessageForm" action="/main/deletePost" method="post">
