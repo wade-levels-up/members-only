@@ -275,6 +275,7 @@ input:focus {
     text-wrap: pretty;
     hyphens: auto;
     font-size: 16px;
+    padding: var(--pixels-twelve);
 }
 
 .cardFooter {

@@ -7,9 +7,9 @@
     </header>
     <main>
         <% if (locals.errors) { %>
-            <ul>
+            <ul class="errorList">
                 <% errors.forEach((error) => { %>
-                    <li><strong>Error:</strong> <%= error.msg %></li>
+                    <li>Error: <%= error.msg %></li>
                   <% }) %>
             </ul>
         <% } %>

@@ -28,7 +28,7 @@
                     <textarea id="message" name="message" rows="5" cols="33" minlength="1" maxlength="200"></textarea>
                 </li>
                 <li class="formButtonMenu">
-                    <button type="submit">Submit</button>
+                    <button onclick="playRandomSound()" type="submit">Submit</button>
                     <button type="reset">Clear</button>
                     <button type="button" onclick="toggleNewMessageModal()">Close</button>
                 </li>
@@ -65,7 +65,7 @@
             <details class="unverified-warning">
                 <summary>‼️ Viewing messages as an unverified member ‼️<br>Click to view details...</summary>
                 <p>This means the name of the poster is hidden as well as the date. To see these details you'll need to become a verified member.</p>
-                <p>To verify your membership please enter the secret passcode below</p>
+                <p>To verify your membership please enter the secret passcode.</p>
                 <% if (locals.errors) { %>
                     <ul class="errorList">
                         <% errors.forEach((error) => { %>
@@ -90,7 +90,7 @@
                     <li class="ends sticky"><i class="fa-solid fa-gear fa-lg gearSpin"></i>- Most Recent -</li>
                     <% messages.forEach((message) => { %>
                         <li class="messageCard">
-                            <span class="cardHeader"><p><i class="fa-solid fa-user fa-sm"></i>Unknown</p><p>Added ------------</p></span>
+                            <span class="cardHeader"><p><i class="fa-solid fa-user fa-sm"></i>  Unknown</p><p>Added ------------</p></span>
                             <p class="cardMain"><%= message.message %></p>
                         </li>
                     <% }) %>
@@ -116,16 +116,21 @@
         }
 
         function toggleNewMessageModal() {
-        const modal = document.querySelector('.newMessageModal');
-        modal.classList.toggle('show');
-        body.classList.toggle('no-scroll');
-        if (modal.classList.contains('show')) {
-                setTimeout(()=> {
-                    textarea.focus();
-                }, 300);
+            const modal = document.querySelector('.newMessageModal');
+            modal.classList.toggle('show');
+            body.classList.toggle('no-scroll');
+            if (modal.classList.contains('show')) {
+                    setTimeout(()=> {
+                        textarea.focus();
+                    }, 300);
+            }
         }
-    }
+
+        function playRandomSound() {
+            const randNum = Math.floor(Math.random() * 4 + 1);
+            const audio = new Audio(`rdf${randNum}.mp3`);
+            audio.play();
+        }
     </script>
-    <%- include("../partials/script") %>
 </body>
 </html>
