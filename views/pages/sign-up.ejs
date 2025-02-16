@@ -25,11 +25,11 @@
                 </li>
                 <li>
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" maxlength="80" required>
+                    <input type="text" name="username" id="username" maxlength="20" required>
                 </li>
                 <li>
-                    <label for="username">Email</label>
-                    <input type="email" name="email" id="email" maxlength="255" required>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" maxlength="80" required>
                 </li>
                 <li>
                     <label for="password">Password</label>
@@ -40,12 +40,12 @@
                     <input type="password" name="confirm_password" id="confirm_password" minlength="8" maxlength="255" required>
                 </li>
                 <li class="formButtonMenu">
-                    <button type="submit">Submit</button>
+                    <button onclick="playRandomSound()" type="submit">Submit</button>
                 </li>
                 <li>
-                    <details>
-                        <summary></summary>
-                        <label for="admin_passcode">Admin sign-up passcode:</label>
+                    <details class="admin_signup">
+                        <summary>Click for Admin sign-up</summary>
+                        <label for="admin_passcode">Passcode</label>
                         <input type="password" name="admin_passcode" id="admin_passcode">
                     </details>
                 </li>
@@ -54,5 +54,6 @@
         <a href="/">Return Home</a>
     </main>
     <%- include("../partials/footer") %>
+    <%- include("../partials/script") %>
 </body>
 </html>

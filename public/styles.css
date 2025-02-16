@@ -19,14 +19,19 @@
     --theme-background-1-trans: rgba(5, 4, 3, 0.9);
     --theme-text-1: rgb(255, 244, 231);
     --theme-link-1: rgb(255, 162, 0);
-
-    --theme-background-2: rgb(238, 243, 255);
-    --theme-text-2: rgb(13, 19, 25);
-    --theme-link-2: rgb(0, 204, 255);
-    
+ 
     --pixels-eight: 8px;
     --pixels-twelve: 12px;
     --pixels-sixteen: 12px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --theme-background-1: rgb(241, 224, 207);
+        --theme-background-1-trans: rgb(241, 224, 207, 0.9);
+        --theme-text-1: rgb(21, 12, 1);
+        --theme-link-1: rgb(57, 140, 249);
+    }
 }
 
 * {
@@ -189,7 +194,7 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.9);
@@ -197,6 +202,7 @@ input:focus {
     transition-property: opacity;
     visibility: hidden;
     transition: opacity 500ms ease, visibility 1s ease;
+    z-index: 5;
 }
 
 .newMessageModal.show {
@@ -244,11 +250,15 @@ input:focus {
     margin-bottom: 16px;
     scrollbar-color: var(--theme-text-1) var(--theme-link-1);
     position: relative;
+    align-items: center;
 }
 
 .messageCard {
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid var(--theme-text-1);
+    border-radius: 0px 0px 5px 5px;
+    width: 90%;
 }
 
 .cardHeader {
@@ -265,6 +275,12 @@ input:focus {
     text-wrap: pretty;
     hyphens: auto;
     font-size: 16px;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100%;
 }
 
 .verified {
@@ -303,6 +319,39 @@ input:focus {
 
 .gearSpin.spinClockwise {
     animation-name: spinClockwise;
+}
+
+.admin_signup {
+    display: flex;
+    flex-direction: column;
+    color: red;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.admin_signup:hover {
+    cursor: pointer;
+}
+
+.errorList li {
+    font-weight: 400;
+    color: red;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.2rem;
+    margin: 12px 0px;
+}
+
+.unverified-warning {
+    text-align: center;
+    max-width: 500px;
+    border: 1px solid red;
+}
+
+.no-scroll {
+    overflow: hidden;
 }
 
 /* Media queries */

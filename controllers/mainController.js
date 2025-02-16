@@ -26,12 +26,15 @@ const postSecretPasscode = [
   validateSecretPasscode,
   asyncHandler(async (req, res) => {
     try {
+      const messages = await queries.getAllMessages();
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).render("pages/main", {
           title: "Main",
           user: req.user,
           errors: errors.array(),
+          formatDate: format,
+          messages: messages,
         });
       }
 
@@ -53,7 +56,7 @@ const postNewPost = [
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).render("pages/main", {
+        return res.status(400).render("pages/main", {
           title: "Main",
           user: req.user,
           errors: errors.array(),

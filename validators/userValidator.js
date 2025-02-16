@@ -10,7 +10,10 @@ const validateNewUser = [
     .trim()
     .isAlpha()
     .withMessage("Last name must only contain letters"),
-  body("username").trim(),
+  body("username")
+    .trim()
+    .isLength({ max: 20 })
+    .withMessage("Username cannot exceed 20 characters"),
   body("email")
     .trim()
     .isEmail({ require_tld: true })
