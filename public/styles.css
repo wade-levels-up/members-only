@@ -1,7 +1,32 @@
+/* Fonts - Kanit, Stick No Bills, Raleway */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Barcode+39+Text&family=Raleway:ital,wght@0,100..900;1,100..900&family=Stick+No+Bills:wght@200..800&display=swap');
+
+@keyframes spinClockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
 :root {
-    font-size: 16px;
-    --theme-background-dark: black;
-    --theme-text-light: white;
+    font-size: 18px;
+    font-family: 'Kanit', 'Raleway', 'Stick No Bills',  system-ui, sans-serif, monospace;
+    font-weight: 150;
+
+    --theme-background-1: rgb(5, 4, 3);
+    --theme-background-1-trans: rgba(5, 4, 3, 0.9);
+    --theme-text-1: rgb(255, 244, 231);
+    --theme-link-1: rgb(255, 162, 0);
+
+    --theme-background-2: rgb(238, 243, 255);
+    --theme-text-2: rgb(13, 19, 25);
+    --theme-link-2: rgb(0, 204, 255);
+    
+    --pixels-eight: 8px;
+    --pixels-twelve: 12px;
+    --pixels-sixteen: 12px;
 }
 
 * {
@@ -9,9 +34,307 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    list-style: none;
 }
 
 body {
-    background-color: var(--theme-background-dark);
-    color: var(--theme-text-light);
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--theme-background-1);
+    color: var(--theme-text-1);
+    position: relative;
+    align-items: center;
+}
+
+/* Global element styles */
+
+a {
+    font-family: 'Stick No Bills', 'Raleway', 'Kanit', system-ui, sans-serif, monospace;
+    color: var(--theme-link-1);
+    text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 100;
+    text-wrap: pretty;
+    font-family: 'Libre Barcode 39 Text', 'Stick No Bills', 'Raleway', 'system-ui', 'sans-serif', 'monospace';
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 250;
+    text-wrap: pretty;
+}
+
+h3, h4, h5, h6 {
+    font-size: 1rem;
+    font-weight: 200;
+    text-wrap: pretty;
+}
+
+textarea {
+    display: block;
+    resize: none;
+    width: 100%;
+    background-color: var(--theme-background-1);
+    font-size: 1rem;
+    color: var(--theme-text-1);
+    padding: var(--pixels-twelve);
+    font-family: 'Raleway', 'Stick No Bills', 'Kanit', system-ui, sans-serif, monospace;
+    line-height: 1.5rem;
+    border: 1px solid var(--theme-link-1)
+}
+
+textarea:focus {
+    outline: 5px auto var(--theme-link-1);
+    filter: drop-shadow(0px 0px 300px var(--theme-link-1));
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-left: 1px solid var(--theme-link-1);
+    padding: 4px 0.5rem;
+}
+
+button {
+    font-family: 'Raleway', 'Stick No Bills', 'Kanit', system-ui, sans-serif, monospace;
+    font-size: 1rem;
+    padding: 2px 24px;
+    border: none;
+}
+
+/* Primary sections */
+
+header, main, footer {
+    display: flex;
+    padding: var(--pixels-sixteen);
+}
+
+header {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--theme-text-1);
+    text-align: center;
+}
+
+main {
+    width: 100%;
+    flex-direction: column;
+    flex: 1;
+    background-color: transparent;
+    align-items: center;
+}
+
+footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px dashed var(--theme-text-1);
+    width: 100%;
+}
+
+form {
+    min-width: 150px;
+    max-width: 600px;
+    padding: var(--pixels-twelve);
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--pixels-twelve);
+}
+
+li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+input {
+    background-color: var(--theme-background-1);
+    font-size: 1rem;
+    color: var(--theme-text-1);
+    padding: var(--pixels-eight);
+    font-family: 'Raleway', 'Stick No Bills', 'Kanit', system-ui, sans-serif, monospace;
+    border: 1px solid var(--theme-link-1)
+}
+
+input:focus {
+    outline: 5px auto var(--theme-link-1);
+    background-color: var(--theme-background-1);
+    color: var(--theme-text-1);
+}
+
+/* Class Sections */
+
+.menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: var(--pixels-twelve);
+    border-bottom: 1px dashed var(--theme-text-1);
+}
+
+.newMessageModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition-property: opacity;
+    visibility: hidden;
+    transition: opacity 500ms ease, visibility 1s ease;
+}
+
+.newMessageModal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.a-button {
+    font-family: 'Stick No Bills', 'Raleway', 'Kanit', system-ui, sans-serif, monospace;
+    color: var(--theme-link-1);
+    text-decoration: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 150;
+}
+
+.a-button:hover {
+    cursor: pointer;
+}
+
+.formButtonMenu {
+    gap: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2px;
+    justify-content: center;
+}
+
+.formButtonMenu button {
+    flex: 1;
+    max-width: 200px;
+}
+
+.messageBoard {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 800px;
+    max-height: 70vh;
+    overflow-y: scroll;
+    scrollbar-width: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    scrollbar-color: var(--theme-text-1) var(--theme-link-1);
+    position: relative;
+}
+
+.messageCard {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    font-weight: 300;
+    background-color: var(--theme-link-1);
+    padding: 0px 6px;
+    font-size: 16px;
+}
+
+.cardMain {
+    text-wrap: pretty;
+    hyphens: auto;
+    font-size: 16px;
+}
+
+.verified {
+    color: rgb(0, 89, 255);
+}
+
+.unverified {
+    color: red;
+}
+
+.ends {
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.sticky {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    background-color: var(--theme-background-1-trans);
+}
+
+.gearSpin {
+    position: absolute;
+    left: 0px;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform-origin;
+    transform-origin: 49.3% 44.3%;
+}
+
+.gearSpin.spinClockwise {
+    animation-name: spinClockwise;
+}
+
+/* Media queries */
+
+@media (max-width: 800px) {
+
+    :root {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    header {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    header span {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu {
+        justify-content: space-evenly;
+        gap: 12px;
+        padding: 6px;
+    }
 }

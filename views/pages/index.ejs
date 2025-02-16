@@ -12,19 +12,17 @@
         <% } else { %>
             <h2>Login</h2>
             <form action="/login" method="post">
-                <ul>
+                <ul>             
                     <li>
-                        <li>
-                            <label for="username">Username: </label>
-                            <input type="text" name="username" id="username" minlength="1" maxlength="80" required>
-                        </li>
-                        <li>
-                            <label for="password">Password: </label>
-                            <input type="password" name="password" id="password" minlength="1" maxlength="80" required>
-                        </li>
-                        <li>
-                            <button type="submit">Log in</button>
-                        </li>
+                        <label for="username">Username: </label>
+                        <input type="text" name="username" id="username" minlength="1" maxlength="80" required>
+                    </li>
+                    <li>
+                        <label for="password">Password: </label>
+                        <input type="password" name="password" id="password" minlength="1" maxlength="80" required>
+                    </li>
+                    <li class="formButtonMenu">
+                        <button type="submit">Log in</button>
                     </li>
                 </ul>
             </form>

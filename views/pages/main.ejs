@@ -4,57 +4,64 @@
 <body>
     <header>
         <h1><%= title %></h1>
-    </header>
-    <main>
         <% if (user.is_admin) { %>
-            <h2><%= user.username %>'s Dashboard (Administrator)</h2>
-        <% } else { %>
-            <h2><%= user.username %>'s Dashboard</h2>
-        <% } %>
+        <span>
+            <h2><%= user.username %>'s Dashboard (<abbr title="Administrator">Admin</abbr>)</h2>
+            <% } else { %>
+                <h2><%= user.username %>'s Dashboard</h2>
+            <% } %>
+            <h3>
+                Membership status: <%= user.is_member ? 'Verified Member' : 'Unverified Member' %>
+                <% if (user.is_member) { %>
+                    <i class="fa-regular fa-square-check fa-lg verified"></i>
+                <% } else { %>
+                    <i class="fa-solid fa-ban fa-lg unverfied"></i>
+                <% } %>
+            </h3>
+        </span>
+    </header>
+    <div class="newMessageModal">
+        <form action="/main/newPost" method="post">
+            <ul>
+                <li>
+                    <label for="message"><i class="fa-regular fa-note-sticky fa-lg"></i>New Message</label>
+                    <textarea id="message" name="message" rows="5" cols="33" minlength="1" maxlength="200"></textarea>
+                </li>
+                <li class="formButtonMenu">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Clear</button>
+                    <button type="button" onclick="toggleNewMessageModal()">Close</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <nav class="menu">
+        <button onclick="toggleNewMessageModal()" class="a-button">New Message</button>
+        <a href="/">Return Home</a>
+        <a href="/logout" role="button">Logout</a>
+    </nav>
+    <main>
+        <h4>Message Board</h4>
         <% if (user.is_member) { %>
-            <h3>Membership status: Verified Member ✅</h3>
-            <a href="/logout">Logout</a>
-            <form action="/main/newPost" method="post">
-                <ul>
-                    <li>
-                        <label for="message">New Message: </label>
-                        <textarea id="message" name="message" rows="5" cols="33"></textarea>
-                    </li>
-                    <li>
-                        <button type="submit">Submit</button>
-                    </li>
-                </ul>
-            </form>
             <% if (locals.messages) { %>
-                <ul>
+                <ul class="messageBoard">
+                    <li class="ends sticky"><i class="fa-solid fa-gear fa-lg gearSpin"></i>- Most Recent -</li>
                     <% messages.forEach((message) => { %>
-                        <li>
-                            <span>Added: <%= formatDate(new Date(message.added), 'PPpp') %> by: <%= message.username %></span>
-                            <p><%= message.message %></p>
+                        <li class="messageCard">
+                            <span class="cardHeader"><p><i class="fa-solid fa-user fa-sm"></i>  <%= message.username %></p><p>Added <%= formatDate(new Date(message.added), 'PPp') %></p></span>
+                            <p class="cardMain"><%= message.message %></p>
                             <% if ( user.is_admin ) { %>
-                                <form id="deleteMessageForm" action="/main/deletePost" method="post">
+                                <form class="cardFooter" id="deleteMessageForm" action="/main/deletePost" method="post">
                                     <input type="hidden" name="message_id" value="<%= message.id %>">
-                                    <button type="submit">Delete</button>
+                                    <button class="a-button" type="submit" title="Delete">Delete</button>
                                 </form>
                             <% } %>
                         </li>
                     <% }) %>
+                    <li class="ends">- Fin -</li>
                 </ul>
             <% } %>
         <% } else { %>
-            <h3>Membership status: Unverified Member ❌</h3>
-            <a href="/logout">Logout</a>
-            <form id="newPostForm" action="/main/newPost" method="post">
-                <ul>
-                    <li>
-                        <label for="message">New Message: </label>
-                        <textarea id="message" name="message" rows="5" cols="33"></textarea>
-                    </li>
-                    <li>
-                        <button type="submit" form="newPostForm">Submit</button>
-                    </li>
-                </ul>
-            </form>
             <p>Viewing messages as an unverfied member. This means the name of the poster is hidden as well as the date. To see these details you'll need to become a verified member.</p>
             <p>To verify your membership please enter the secret passcode below</p>
             <% if (locals.errors) { %>
@@ -76,17 +83,35 @@
                 </ul>
             </form>
             <% if (locals.messages) { %>
-                <ul>
+                <ul class="messageBoard">
+                    <li class="ends sticky"><i class="fa-solid fa-gear fa-lg gearSpin"></i>- Most Recent -</li>
                     <% messages.forEach((message) => { %>
-                        <li>
-                            <span>Added: ******** %> by: ********</span>
-                            <p><%= message.message %></p>
+                        <li class="messageCard">
+                            <span class="cardHeader"><p><i class="fa-solid fa-user fa-sm"></i>Unknown</p><p>Added ------------</p></span>
+                            <p class="cardMain"><%= message.message %></p>
                         </li>
                     <% }) %>
+                    <li class="ends">- Fin -</li>
                 </ul>
             <% } %>
         <% } %>
     </main>
     <%- include("../partials/footer") %>
+    <script>
+        const messageBoard = document.querySelector(".messageBoard")
+        const gearSpin = document.querySelector(".gearSpin");
+
+        messageBoard.addEventListener("scroll", () => {
+            gearSpin.classList.add('spinClockwise');
+            setTimeout(() => {
+                gearSpin.classList.remove('spinClockwise');
+            }, 1000);
+        })
+
+        function toggleNewMessageModal() {
+        const modal = document.querySelector('.newMessageModal');
+        modal.classList.toggle('show');
+    }
+    </script>
 </body>
 </html>
